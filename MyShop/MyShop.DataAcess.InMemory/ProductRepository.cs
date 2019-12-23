@@ -70,6 +70,22 @@ namespace MyShop.DataAcess.InMemory
             return products.AsQueryable();
         }
 
+        public void Delete(string Id) 
+        {
+            Product ProductToDelete = products.Find(x => x.Id == Id);
+
+            if (ProductToDelete != null)
+            {
+                products.Remove(ProductToDelete);
+
+            }
+
+            else
+            {
+                throw new Exception("Product not found");
+            }
+        }
+
 
     }
 }
