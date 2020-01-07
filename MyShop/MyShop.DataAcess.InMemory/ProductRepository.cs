@@ -17,7 +17,7 @@ namespace MyShop.DataAcess.InMemory
         {
             products = cache["products"] as List<Product>;
 
-            if(products == null)
+            if (products == null)
             {
                 products = new List<Product>();
             }
@@ -51,7 +51,7 @@ namespace MyShop.DataAcess.InMemory
 
         public Product Find(string Id)
         {
-            Product  product = products.Find(x => x.Id == Id);
+            Product product = products.Find(x => x.Id == Id);
 
             if (product != null)
             {
@@ -70,7 +70,7 @@ namespace MyShop.DataAcess.InMemory
             return products.AsQueryable();
         }
 
-        public void Delete(string Id) 
+        public void Delete(string Id)
         {
             Product ProductToDelete = products.Find(x => x.Id == Id);
 

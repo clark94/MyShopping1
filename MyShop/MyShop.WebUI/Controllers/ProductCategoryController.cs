@@ -5,43 +5,37 @@ using System.Web;
 using System.Web.Mvc;
 using MyShop.Core.Models;
 using MyShop.DataAcess.InMemory;
-using MyShop.Core.ViewModel;
 
 
 namespace MyShop.WebUI.Controllers
 {
-    public class ProductManagerController : Controller
+    public class ProductCategoryController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository productCategories; 
+        ProductCategoryRepository context;
 
-        public ProductManagerController()
+        public ProductCategoryController()
         {
-            context = new ProductRepository();
-            productCategories = new ProductCategoryRepository();
+            context = new ProductCategoryRepository();
 
         }
 
         // GET: ProductManager
         public ActionResult Index()
         {
-            List<Product> products = context.Collection().ToList();
+            List<ProductCategory> products = context.Collection().ToList();
             return View(products);
         }
 
         public ActionResult Create()
         {
-            ProductManagmentViewModel viewModel = new ProductManagmentViewModel();
+            ProductCategory product = new ProductCategory();
 
-            viewModel.Product = new Product();
-            viewModel.ProductCategories = productCategories.Collection();
-            
-            return View(viewModel);
+            return View(product);
         }
 
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(ProductCategory product)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +53,7 @@ namespace MyShop.WebUI.Controllers
 
         public ActionResult Edit(string id)
         {
-            Product product = context.Find(id);
+            ProductCategory product = context.Find(id);
 
             if (product == null)
             {
@@ -68,17 +62,14 @@ namespace MyShop.WebUI.Controllers
 
             else
             {
-                ProductManagmentViewModel viewModel = new ProductManagmentViewModel();
-                viewModel.Product = product;
-                viewModel.ProductCategories = productCategories.Collection();
-                return View(viewModel);
+                return View(product);
             }
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product, string Id)
+        public ActionResult Edit(ProductCategory product, string Id)
         {
-            Product productToEdit = context.Find(Id);
+            ProductCategory productToEdit = context.Find(Id);
 
             if (productToEdit == null)
             {
@@ -93,11 +84,7 @@ namespace MyShop.WebUI.Controllers
                 }
 
                 productToEdit.Category = product.Category;
-                productToEdit.Description = product.Description;
-                productToEdit.Image = product.Image;
-                productToEdit.Name = product.Name;
-                productToEdit.Price = product.Price;
-
+               
             }
 
             context.Commit();
@@ -107,7 +94,7 @@ namespace MyShop.WebUI.Controllers
 
         public ActionResult Delete(string id)
         {
-            Product productToDelete = context.Find(id);
+            ProductCategory productToDelete = context.Find(id);
 
             if (productToDelete == null)
             {
@@ -125,7 +112,7 @@ namespace MyShop.WebUI.Controllers
         [ActionName("Delete")]
         public ActionResult ConfirmDelete(string id)
         {
-            Product productToDelete = context.Find(id);
+            ProductCategory productToDelete = context.Find(id);
 
             if (productToDelete == null)
             {
